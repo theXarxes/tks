@@ -1,8 +1,9 @@
 package controller;
 
 import DTO.userDTO.GetUserDTO;
-import application.userPorts.ReadAllUserAppPort;
+import application.userPorts.ReadUserAppPort;
 import entity.users.User;
+import exception.UserException;
 import mapper.UserMapper;
 
 import javax.inject.Inject;
@@ -22,36 +23,52 @@ public class UserController {
     Validator validator = factory.getValidator();
 
     @Inject
-    ReadAllUserAppPort userService;
+    ReadUserAppPort readUserPort;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
         List<GetUserDTO> list = new ArrayList<>();
-        for(User u: userService.getUsers()){
+        for(User u: readUserPort.getUsers()){
             list.add(UserMapper.userMapper(u));
         }
         return Response.ok().entity(list).build();
     }
 
-//    @GET
-//    @Path("{login}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response findByLogin(@PathParam("login") String login) {
-//        try {
-//            return Response.ok().entity(userService.getUser(login)).build();
-//        } catch (UserException e){
-//            return Response.status(404).build();
-//        }
-//    }
-//
-//    @GET
-//    @Path("/part/{login}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response findByPartialLogin(@PathParam("login") String login) {
-//        return Response.ok().entity(userService.getByPartLogin(login)).build();
-//    }
-//
+    @GET
+    @Path("{login}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByLogin(@PathParam("login") String login) {
+        try {
+            GetUserDTO u = UserMapper.userMapper(readUserPort.getUser(login));
+            return Response.ok().entity(u).build();
+        } catch (UserException e){
+            return Response.status(404).build();
+        }
+    }
+
+    @GET
+    @Path("/part/{login}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByPartialLogin(@PathParam("login") String login) {
+        List<GetUserDTO> list = new ArrayList<>();
+        for(User u: readUserPort.getByPartLogin(login)){
+            list.add(UserMapper.userMapper(u));
+        }
+        return Response.ok().entity(list).build();
+    }
+
+    @GET
+    @Path("/changeActivity/{login}")
+    public Response changeActivity(@PathParam("login") String login){
+        try {
+            readUserPort.changeActivity(login);
+            return Response.ok().build();
+        } catch (UserException e){
+            return Response.status(404).build();
+        }
+    }
+
 //    @POST
 //    @Path("/addAdmin")
 //    @Consumes(MediaType.APPLICATION_JSON)
@@ -115,17 +132,5 @@ public class UserController {
 //        return Response.status(400).build();
 //    }
 //
-//    @GET
-//    @Path("/changeActivity/{login}")
-//    public Response changeActivity(@PathParam("login") String login){
-//        try {
-//            userService.changeActivity(login);
-//            Response.ok().build();
-//        } catch (UserException e){
-//            return Response.status(404).build();
-//        }
-//
-//        return Response.status(400).build();
-//    }
 
 }

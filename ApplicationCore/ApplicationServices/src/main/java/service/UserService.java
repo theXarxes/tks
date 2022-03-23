@@ -1,22 +1,42 @@
 package service;
 
-import application.userPorts.ReadAllUserAppPort;
+import application.userPorts.ReadUserAppPort;
 import entity.users.User;
-import infrastructure.userPorts.ReadAllUsersPort;
+import exception.UserException;
+import infrastructure.userPorts.ReadUsersPort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class UserService implements ReadAllUserAppPort {
+public class UserService implements ReadUserAppPort {
 
     @Inject
-    ReadAllUsersPort getUserPort;
+    ReadUsersPort getUserPort;
 
     public List<User> getUsers(){
         return getUserPort.getUsers();
+    }
+
+    public User getUser(String login) throws UserException {
+        User u = getUserPort.getUser(login);
+        if (u == null){
+            throw new UserException("Invalid user login...");
+        }
+        return u;
+    }
+
+    @Override
+    public List<User> getByPartLogin(String login){
+        return getUserPort.getByPartLogin(login);
+    }
+
+    @Override
+    public void changeActivity(String login) throws UserException {
+        if(!getUserPort.changeActivity(login)){
+            throw new UserException("Invalid user login");
+        }
     }
 
 //    public void addUser(UserDTO userDTO) throws AccessLevelException, UserException {
@@ -53,13 +73,6 @@ public class UserService implements ReadAllUserAppPort {
 //        getUserPort.addClientUser(userDTO);
 //    }
 //
-//    public GetUserDTO getUser(String login) throws UserException {
-//            User u = getUserPort.getUser(login);
-//            if (u == null){
-//                throw new UserException("Invalid user login...");
-//            }
-//            return UserMapper.userMapper(u);
-//    }
 //
 //    public void updateUser(PutUserDTO userDTO) throws UserException {
 //        if(userDTO.getName() == null) throw new UserException("Incomplite user data...");
@@ -68,19 +81,5 @@ public class UserService implements ReadAllUserAppPort {
 //        }
 //    }
 //
-//    public void changeActivity(String login) throws UserException {
-//        if(!getUserPort.changeActivity(login)){
-//            throw new UserException("Invalid user login");
-//        }
-//
-//    }
-//
-//    public ArrayList<GetUserDTO> getByPartLogin(String login){
-//        ArrayList<GetUserDTO> u = new ArrayList<>();
-//        for (User x: getUserPort.getByPartLogin(login)){
-//            u.add(UserMapper.userMapper(x));
-//        }
-//        return u;
-//    }
 
 }
