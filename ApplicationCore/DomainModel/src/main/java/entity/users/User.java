@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class User {
-    final UUID id;
+public abstract class User {
+    UUID id;
     String login;
     boolean isActive;
     String name;
@@ -18,7 +18,10 @@ public class User {
         this.name = name;
     }
 
-    public String getAccessLevel(){
-        return "User";
-    };
+    public User(String login, String name) {
+        this.login = login;
+        this.name = name;
+    }
+
+    public abstract String getAccessLevel();
 }

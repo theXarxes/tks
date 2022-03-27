@@ -50,31 +50,33 @@ public class UserRepository {
         return false;
     }
 
-//    public void addAdminUser(User user){
-//        users.add(new AdminUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
-//    }
-//    public void addDataUser(User user){
-//        users.add(new DataAdminUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
-//    }
-//    public void addClientUser(User user){
-//        users.add(new ClientUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
-//    }
-//
-//    public boolean updateUser(User u){
-//        UserEnt UserEnt = getUser(u.getLogin());
-//        if (UserEnt != null){
-//            UserEnt.setName(u.getName());
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean isLoginNotUnique(String login){
-//        for (UserEnt u : users){
-//            if (u.getLogin().equals(login)){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public void addAdminUser(AdminUserEnt user){
+        users.add(new AdminUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
+    }
+
+    public void addDataUser(DataAdminUserEnt user){
+        users.add(new DataAdminUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
+    }
+
+    public void addClientUser(ClientUserEnt user){
+        users.add(new ClientUserEnt(UUID.randomUUID(), user.getLogin(),true, user.getName()));
+    }
+
+    public boolean updateUser(ClientUserEnt user){
+        UserEnt userEnt = getUser(user.getLogin());
+        if (userEnt != null){
+            userEnt.setName(user.getName());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLoginNotUnique(String login){
+        for (UserEnt u : users){
+            if (u.getLogin().equals(login)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

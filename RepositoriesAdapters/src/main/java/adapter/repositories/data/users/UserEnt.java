@@ -12,7 +12,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public abstract class UserEnt {
-    final UUID id;
+    UUID id;
     String login;
     boolean isActive;
     String name;
@@ -21,6 +21,11 @@ public abstract class UserEnt {
         this.id = uuid;
         this.login = login;
         this.isActive = isActive;
+        this.name = name;
+    }
+
+    public UserEnt(String login, String name) {
+        this.login = login;
         this.name = name;
     }
 

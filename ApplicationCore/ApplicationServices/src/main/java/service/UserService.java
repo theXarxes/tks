@@ -1,8 +1,14 @@
 package service;
 
+import application.userPorts.EditUserAppPort;
 import application.userPorts.ReadUserAppPort;
+import entity.users.AdminUser;
+import entity.users.ClientUser;
+import entity.users.DataAdminUser;
 import entity.users.User;
+import exception.AccessLevelException;
 import exception.UserException;
+import infrastructure.userPorts.EditUserPort;
 import infrastructure.userPorts.ReadUsersPort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,15 +16,20 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
-public class UserService implements ReadUserAppPort {
+public class UserService implements ReadUserAppPort, EditUserAppPort {
 
     @Inject
     ReadUsersPort getUserPort;
 
+    @Inject
+    EditUserPort editUserPort;
+
+    @Override
     public List<User> getUsers(){
         return getUserPort.getUsers();
     }
 
+    @Override
     public User getUser(String login) throws UserException {
         User u = getUserPort.getUser(login);
         if (u == null){
@@ -51,35 +62,36 @@ public class UserService implements ReadUserAppPort {
 //            }
 //            userRepository.addUser(userDTO);
 //    }
-
-//    public void addAdminUser(PostUserDTO userDTO) throws AccessLevelException, UserException {
-//        if (getUserPort.isLoginNotUnique(userDTO.getLogin())){
-//            throw new UserException("This login is occupied...");
-//        }
-//        getUserPort.addAdminUser(userDTO);
-//    }
-//
-//    public void addDataUser(PostUserDTO userDTO) throws AccessLevelException, UserException {
-//        if (getUserPort.isLoginNotUnique(userDTO.getLogin())){
-//            throw new UserException("This login is occupied...");
-//        }
-//        getUserPort.addDataUser(userDTO);
-//    }
-//
-//    public void addClientUser(PostUserDTO userDTO) throws AccessLevelException, UserException {
-//        if (getUserPort.isLoginNotUnique(userDTO.getLogin())){
-//            throw new UserException("This login is occupied...");
-//        }
-//        getUserPort.addClientUser(userDTO);
-//    }
-//
-//
-//    public void updateUser(PutUserDTO userDTO) throws UserException {
-//        if(userDTO.getName() == null) throw new UserException("Incomplite user data...");
-//        if (!getUserPort.updateUser(userDTO)){
-//            throw new UserException("Invalid user id...");
-//        }
-//    }
 //
 
+    @Override
+    public void addAdminUser(AdminUser user) throws UserException {
+        if (editUserPort.isLoginNotUnique(user.getLogin())){
+            throw new UserException("This login is occupied...");
+        }
+        editUserPort.addAdminUser(user);
+    }
+
+    @Override
+    public void addDataUser(DataAdminUser user) throws UserException {
+        if (editUserPort.isLoginNotUnique(user.getLogin())){
+            throw new UserException("This login is occupied...");
+        }
+        editUserPort.addDataUser(user);
+    }
+
+    @Override
+    public void addClientUser(ClientUser user) throws UserException {
+        if (editUserPort.isLoginNotUnique(user.getLogin())){
+            throw new UserException("This login is occupied...");
+        }
+        editUserPort.addClientUser(user);
+    }
+
+    public void updateUser(ClientUser user) throws UserException {
+        if(user.getName() == null) throw new UserException("Incomplite user data...");
+        if (!editUserPort.updateUser(user)){
+            throw new UserException("Invalid user id...");
+        }
+    }
 }

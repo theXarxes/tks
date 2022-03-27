@@ -8,6 +8,10 @@ public class AdminUserEnt extends UserEnt {
         super(uuid, login, isActive, name);
     }
 
+    public AdminUserEnt(String login, String name) {
+        super(login, name);
+    }
+
     @Override
     public String getAccessLevel() {
         return "ADMIN";

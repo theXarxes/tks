@@ -8,6 +8,10 @@ public class AdminUser extends User{
         super(uuid, login, isActive, name);
     }
 
+    public AdminUser(String login, String name) {
+        super(login, name);
+    }
+
     @Override
     public String getAccessLevel() {
         return "ADMIN";

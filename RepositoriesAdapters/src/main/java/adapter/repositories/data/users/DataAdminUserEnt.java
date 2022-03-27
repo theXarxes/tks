@@ -9,6 +9,10 @@ public class DataAdminUserEnt extends UserEnt {
         super(uuid, login, isActive, name);
     }
 
+    public DataAdminUserEnt(String login, String name) {
+        super(login, name);
+    }
+
     @Override
     public String getAccessLevel() {
         return "DATA_ADMIN";

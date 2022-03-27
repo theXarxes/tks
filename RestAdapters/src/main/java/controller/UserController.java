@@ -1,6 +1,8 @@
 package controller;
 
 import DTO.userDTO.GetUserDTO;
+import DTO.userDTO.PUserDTO;
+import application.userPorts.EditUserAppPort;
 import application.userPorts.ReadUserAppPort;
 import entity.users.User;
 import exception.UserException;
@@ -14,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Path("/user")
@@ -24,6 +27,9 @@ public class UserController {
 
     @Inject
     ReadUserAppPort readUserPort;
+
+    @Inject
+    EditUserAppPort editUserPort;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,68 +75,66 @@ public class UserController {
         }
     }
 
-//    @POST
-//    @Path("/addAdmin")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response addAdminUser(PostUserDTO userDTO){
-//        Set<ConstraintViolation<PostUserDTO>> cos = validator.validate(userDTO);
-//        if(cos.isEmpty()){
-//            try {
-//                userService.addAdminUser(userDTO);
-//                return Response.status(201).build();
-//            } catch (AccessLevelException | UserException | NullPointerException e){
-//                return Response.status(409).build();
-//            }
-//        }
-//        return Response.status(400).build();
-//    }
-//
-//    @POST
-//    @Path("/addData")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response addDataUser(PostUserDTO userDTO){
-//        Set<ConstraintViolation<PostUserDTO>> cos = validator.validate(userDTO);
-//        if(cos.isEmpty()){
-//            try {
-//                userService.addDataUser(userDTO);
-//                return Response.status(201).build();
-//            } catch (AccessLevelException | UserException | NullPointerException e){
-//                return Response.status(409).build();
-//            }
-//        }
-//        return Response.status(400).build();
-//    }
-//
-//    @POST
-//    @Path("/addClient")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response addClientUser(PostUserDTO userDTO){
-//        Set<ConstraintViolation<PostUserDTO>> cos = validator.validate(userDTO);
-//        if(cos.isEmpty()){
-//            try {
-//                userService.addClientUser(userDTO);
-//                return Response.status(201).build();
-//            } catch (AccessLevelException | UserException | NullPointerException e){
-//                return Response.status(409).build();
-//            }
-//        }
-//        return Response.status(400).build();
-//    }
-//
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response update(PutUserDTO userDTO){
-//        Set<ConstraintViolation<PutUserDTO>> cos = validator.validate(userDTO);
-//        if(cos.isEmpty()){
-//            try {
-//                userService.updateUser(userDTO);
-//                return Response.status(201).build();
-//            } catch (UserException e){
-//                return Response.status(409).build();
-//            }
-//        }
-//        return Response.status(400).build();
-//    }
-//
+    @POST
+    @Path("/addAdmin")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addAdminUser(PUserDTO userDTO){
+        Set<ConstraintViolation<PUserDTO>> cos = validator.validate(userDTO);
+        if(cos.isEmpty()){
+            try {
+                editUserPort.addAdminUser(UserMapper.getPAdminUserDomain(userDTO));
+                return Response.status(201).build();
+            } catch (UserException | NullPointerException e){
+                return Response.status(409).build();
+            }
+        }
+        return Response.status(400).build();
+    }
 
+    @POST
+    @Path("/addData")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addDataUser(PUserDTO userDTO){
+        Set<ConstraintViolation<PUserDTO>> cos = validator.validate(userDTO);
+        if(cos.isEmpty()){
+            try {
+                editUserPort.addDataUser(UserMapper.getPDataAdminUserDomain(userDTO));
+                return Response.status(201).build();
+            } catch (UserException | NullPointerException e){
+                return Response.status(409).build();
+            }
+        }
+        return Response.status(400).build();
+    }
+
+    @POST
+    @Path("/addClient")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addClientUser(PUserDTO userDTO){
+        Set<ConstraintViolation<PUserDTO>> cos = validator.validate(userDTO);
+        if(cos.isEmpty()){
+            try {
+                editUserPort.addClientUser(UserMapper.getPClientUserDomain(userDTO));
+                return Response.status(201).build();
+            } catch (UserException | NullPointerException e){
+                return Response.status(409).build();
+            }
+        }
+        return Response.status(400).build();
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response update(PUserDTO userDTO){
+        Set<ConstraintViolation<PUserDTO>> cos = validator.validate(userDTO);
+        if(cos.isEmpty()){
+            try {
+                editUserPort.updateUser(UserMapper.getPClientUserDomain(userDTO));
+                return Response.status(201).build();
+            } catch (UserException e){
+                return Response.status(409).build();
+            }
+        }
+        return Response.status(400).build();
+    }
 }

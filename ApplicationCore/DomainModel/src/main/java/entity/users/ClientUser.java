@@ -8,6 +8,10 @@ public class ClientUser extends User{
         super(uuid, login, isActive, name);
     }
 
+    public ClientUser(String login, String name) {
+        super(login, name);
+    }
+
     @Override
     public String getAccessLevel() {
         return "CLIENT";

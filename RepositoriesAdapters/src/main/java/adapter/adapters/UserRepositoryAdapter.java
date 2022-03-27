@@ -1,9 +1,12 @@
 package adapter.adapters;
 
 import adapter.domainMappers.DomainUserMapper;
+import adapter.repositories.data.users.DataAdminUserEnt;
 import adapter.repositories.data.users.UserEnt;
 import adapter.repositories.repository.UserRepository;
+import entity.users.DataAdminUser;
 import entity.users.User;
+import infrastructure.userPorts.EditUserPort;
 import infrastructure.userPorts.ReadUsersPort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class UserRepositoryAdapter implements ReadUsersPort {
+public class UserRepositoryAdapter implements ReadUsersPort, EditUserPort {
 
     @Inject
     UserRepository repository;
@@ -46,5 +49,30 @@ public class UserRepositoryAdapter implements ReadUsersPort {
         return repository.changeActivity(login);
     }
 
+
+    @Override
+    public boolean isLoginNotUnique(String login) {
+        return repository.isLoginNotUnique(login);
+    }
+
+    @Override
+    public void addAdminUser(User user) {
+        repository.addAdminUser(DomainUserMapper.getAdminUserEnt(user));
+    }
+
+    @Override
+    public void addDataUser(User user) {
+        repository.addDataUser(DomainUserMapper.getDataAdminUserEnt(user));
+    }
+
+    @Override
+    public void addClientUser(User user) {
+        repository.addClientUser(DomainUserMapper.getClientUserEnt(user));
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return repository.updateUser(DomainUserMapper.getClientUserEnt(user));
+    }
 
 }
