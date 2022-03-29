@@ -10,14 +10,29 @@ import java.util.UUID;
 public class ResourceAllocationMarker {
     final UUID id;
     final LocalDate start;
-    final Resource resource;
+    final UUID resource;
     boolean isEnded = false;
-    User user;
+    String user;
 
-    public ResourceAllocationMarker(Resource resource, int delay, User user) {
+    public ResourceAllocationMarker(UUID resource, int delay, String user) {
         this.id = UUID.randomUUID();
         this.resource = resource;
         this.start = LocalDate.now().plusDays(delay);
+        this.user = user;
+    }
+
+    public ResourceAllocationMarker(UUID id, LocalDate start, UUID resource, String user) {
+        this.id = id;
+        this.start = start;
+        this.resource = resource;
+        this.user = user;
+    }
+
+    public ResourceAllocationMarker(UUID id, LocalDate start, UUID resource, boolean isEnded, String user) {
+        this.id = id;
+        this.start = start;
+        this.resource = resource;
+        this.isEnded = isEnded;
         this.user = user;
     }
 }

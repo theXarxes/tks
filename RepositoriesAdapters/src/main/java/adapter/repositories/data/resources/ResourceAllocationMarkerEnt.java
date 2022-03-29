@@ -12,14 +12,22 @@ import java.util.UUID;
 public class ResourceAllocationMarkerEnt {
     final UUID id;
     final LocalDate start;
-    final ResourceEnt resource;
+    final UUID resource;
     boolean isEnded = false;
-    UserEnt user;
+    String user;
 
-    public ResourceAllocationMarkerEnt(ResourceEnt resource, int delay, UserEnt user) {
+    public ResourceAllocationMarkerEnt(UUID resource, int delay, String user) {
         this.id = UUID.randomUUID();
         this.resource = resource;
         this.start = LocalDate.now().plusDays(delay);
+        this.user = user;
+    }
+
+    public ResourceAllocationMarkerEnt(UUID id, LocalDate start, UUID resource, boolean isEnded, String user) {
+        this.id = id;
+        this.start = start;
+        this.resource = resource;
+        this.isEnded = isEnded;
         this.user = user;
     }
 }

@@ -1,46 +1,59 @@
 package service;
 
 
+import application.resourcePorts.EditResourceAppPort;
+import application.resourcePorts.ReadResourceAppPort;
+import entity.resources.Resource;
+import exception.ResourceAllocationException;
+import exception.ResourceException;
+import infrastructure.resourcePorts.EditResourcePort;
+import infrastructure.resourcePorts.ReadResourcePort;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class ResourceService {
+public class ResourceService implements ReadResourceAppPort, EditResourceAppPort {
 
-//    @Inject
-//    ResourceRepository resourceRepository;
-//
-//    public void addResource(PostResourceDTO resourceDTO){
-//        resourceRepository.addResource(new Resource(resourceDTO.getValueOfResource()));
-//    }
-//
-//    public GetResourceDTO findById(UUID id) throws ResourceException {
-//            Resource r = resourceRepository.findById(id);
-//            if (r == null){
-//                throw new ResourceException("Invalid resource id...");
-//            }
-//            return ResourceMapper.resourceMapper(r);
-//    }
-//
-//    public ArrayList<GetResourceDTO> findAll(){
-//        ArrayList<GetResourceDTO> list = new ArrayList<>();
-//        for (Resource r : resourceRepository.findAll()){
-//            list.add(ResourceMapper.resourceMapper(r));
-//        }
-//        return list;
-//    }
-//
-//    public void update(PutResourceDTO resourceDTO) throws ResourceAllocationException {
-//            if (!resourceRepository.update(resourceDTO)){
-//                throw new ResourceAllocationException("Invalid resource id...");
-//            }
-//    }
-//
-//    public void delete(UUID id) throws ResourceException {
-//            if (!resourceRepository.delete(id)){
-//                throw new ResourceException("Invalid resource id...");
-//            }
-//    }
+    @Inject
+    ReadResourcePort readResourcePort;
+
+    @Inject
+    EditResourcePort editResourcePort;
+
+    @Override
+    public Resource findById(UUID id) throws ResourceException {
+        Resource r = readResourcePort.findById(id);
+        if (r == null){
+            throw new ResourceException("Invalid resource id...");
+        }
+        return r;
+    }
+
+    @Override
+    public List<Resource> findAll(){
+        return readResourcePort.findAll();
+    }
+
+    @Override
+    public void addResource(Resource resource){
+        editResourcePort.addResource(resource);
+    }
+
+    @Override
+    public void update(Resource resource) throws ResourceAllocationException {
+            if (!editResourcePort.update(resource)){
+                throw new ResourceAllocationException("Invalid resource id...");
+            }
+    }
+
+    @Override
+    public void delete(UUID id) throws ResourceException {
+            if (!editResourcePort.delete(id)){
+                throw new ResourceException("Invalid resource id...");
+            }
+    }
 }
