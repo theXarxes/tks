@@ -8,13 +8,14 @@ import lombok.Setter;
 
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class GetMarkerDTO {
+public class GetMarkerDTO implements Serializable {
 
     @NotNull
     UUID id;

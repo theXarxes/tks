@@ -21,7 +21,7 @@ public class ResourceTest {
     public void getTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/resource");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/resource");
 
         GetResourceDTO r = target
                 .path("/68a577ae-6863-4510-82ce-aadecadb736c")
@@ -35,7 +35,7 @@ public class ResourceTest {
     public void getAllTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/resource");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/resource");
 
         List<GetResourceDTO> r = target
                 .request(MediaType.APPLICATION_JSON)
@@ -49,7 +49,7 @@ public class ResourceTest {
     public void updateTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/resource");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/resource");
 
         PutResourceDTO resourceDTO = new PutResourceDTO();
         resourceDTO.setId(UUID.fromString("f01221d3-c14b-4c40-adfb-509238ed26a4"));
@@ -68,7 +68,7 @@ public class ResourceTest {
     public void createTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/resource");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/resource");
 
         PostResourceDTO resourceDTO = new PostResourceDTO();
         resourceDTO.setValueOfResource(4);
@@ -86,7 +86,7 @@ public class ResourceTest {
     public void deleteTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/resource");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/resource");
 
         List<GetResourceDTO> r = target
                 .request(MediaType.APPLICATION_JSON)

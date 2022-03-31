@@ -20,7 +20,7 @@ public class UserTest {
     public void getAllTest(){
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         List<GetUserDTO> u = target.request(MediaType.APPLICATION_JSON).get().readEntity(new GenericType<List<GetUserDTO>>() {
         });
@@ -32,7 +32,7 @@ public class UserTest {
     public void getByNameTest(){
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         GetUserDTO u = target.path("/user2")
                 .request(MediaType.APPLICATION_JSON)
@@ -45,7 +45,7 @@ public class UserTest {
     public void getAllPartLoginTest(){
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         List<GetUserDTO> u = target
                 .path("/part/user")
@@ -60,7 +60,7 @@ public class UserTest {
     public void updateTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         PUserDTO u = new PUserDTO();
         u.setLogin("user1");
@@ -78,7 +78,7 @@ public class UserTest {
     public void createTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         PUserDTO u = new PUserDTO();
         u.setLogin("test1");
@@ -124,7 +124,7 @@ public class UserTest {
     public void createNoUniqueTest() {
         ClientBuilder clientBuilder = ClientBuilder.newBuilder();
         Client client = clientBuilder.build();
-        WebTarget target = client.target("http://localhost:8080/RestPAS-1.0-SNAPSHOT/api/user");
+        WebTarget target = client.target("http://localhost:8080/WEB-0.1/api/user");
 
         PUserDTO u = new PUserDTO();
         u.setLogin("test1");

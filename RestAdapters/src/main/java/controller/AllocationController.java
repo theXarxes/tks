@@ -37,6 +37,7 @@ public class AllocationController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findAll() {
         List<GetMarkerDTO> l = new ArrayList<>();
         for(ResourceAllocationMarker r: readAllocationAppPort.getMarkers()){
@@ -48,6 +49,7 @@ public class AllocationController {
     @GET
     @Path("/resource/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findAllByResource(@PathParam("id") UUID id) {
         try {
             List<GetMarkerDTO> l = new ArrayList<>();
@@ -63,6 +65,7 @@ public class AllocationController {
     @GET
     @Path("/user/{login}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findAllByUser(@PathParam("login") String login) {
         try {
             List<GetMarkerDTO> l = new ArrayList<>();
@@ -79,6 +82,7 @@ public class AllocationController {
     @GET
     @Path("/user/{login}/current")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findAllCurrentByUser(@PathParam("login") String login) {
         try {
             List<GetMarkerDTO> l = new ArrayList<>();
@@ -94,6 +98,7 @@ public class AllocationController {
     @GET
     @Path("/user/{login}/ended")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findAllEndedByUser(@PathParam("login") String login) {
         try {
             List<GetMarkerDTO> l = new ArrayList<>();
@@ -109,6 +114,7 @@ public class AllocationController {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") UUID id) {
         try {
             GetMarkerDTO g = ResAllMarkerMapper.resAllMarkerMapper(readAllocationAppPort.findById(id));
@@ -134,6 +140,7 @@ public class AllocationController {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response allocateResource(PostMarkerDTO dto){
         Set<ConstraintViolation<PostMarkerDTO>> cos = validator.validate(dto);
         if(cos.isEmpty()){
