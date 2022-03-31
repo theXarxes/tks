@@ -1,11 +1,14 @@
 package controller;
 
+import DTO.markerDTO.GetMarkerDTO;
 import DTO.markerDTO.PostMarkerDTO;
 import application.allocationPorts.EditAllocationAppPort;
 import application.allocationPorts.ReadAllocationAppPort;
+import entity.resources.ResourceAllocationMarker;
 import exception.ResourceAllocationException;
 import exception.ResourceException;
 import exception.UserException;
+import mapper.ResAllMarkerMapper;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
@@ -15,6 +18,8 @@ import javax.validation.ValidatorFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,7 +38,11 @@ public class AllocationController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() {
-        return Response.ok().entity(readAllocationAppPort.getMarkers()).build();
+        List<GetMarkerDTO> l = new ArrayList<>();
+        for(ResourceAllocationMarker r: readAllocationAppPort.getMarkers()){
+            l.add(ResAllMarkerMapper.resAllMarkerMapper(r));
+        }
+        return Response.ok().entity(l).build();
     }
 
     @GET
@@ -41,7 +50,11 @@ public class AllocationController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllByResource(@PathParam("id") UUID id) {
         try {
-            return Response.ok().entity(readAllocationAppPort.findAllByResource(id)).build();
+            List<GetMarkerDTO> l = new ArrayList<>();
+            for(ResourceAllocationMarker r: readAllocationAppPort.findAllByResource(id)){
+                l.add(ResAllMarkerMapper.resAllMarkerMapper(r));
+            }
+            return Response.ok().entity(l).build();
         } catch (ResourceException e){
             return Response.status(404).build();
         }
@@ -52,7 +65,11 @@ public class AllocationController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllByUser(@PathParam("login") String login) {
         try {
-            return Response.ok().entity(readAllocationAppPort.findAllByUser(login)).build();
+            List<GetMarkerDTO> l = new ArrayList<>();
+            for(ResourceAllocationMarker r: readAllocationAppPort.findAllByUser(login)){
+                l.add(ResAllMarkerMapper.resAllMarkerMapper(r));
+            }
+            return Response.ok().entity(l).build();
         } catch (ResourceException e){
             return Response.status(404).build();
 
@@ -64,7 +81,11 @@ public class AllocationController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllCurrentByUser(@PathParam("login") String login) {
         try {
-            return Response.ok().entity(readAllocationAppPort.findAllCurrentByUser(login)).build();
+            List<GetMarkerDTO> l = new ArrayList<>();
+            for(ResourceAllocationMarker r: readAllocationAppPort.findAllCurrentByUser(login)){
+                l.add(ResAllMarkerMapper.resAllMarkerMapper(r));
+            }
+            return Response.ok().entity(l).build();
         } catch (ResourceException e){
             return Response.status(404).build();
         }
@@ -75,7 +96,11 @@ public class AllocationController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllEndedByUser(@PathParam("login") String login) {
         try {
-            return Response.ok().entity(readAllocationAppPort.findAllEndedByUser(login)).build();
+            List<GetMarkerDTO> l = new ArrayList<>();
+            for(ResourceAllocationMarker r: readAllocationAppPort.findAllEndedByUser(login)){
+                l.add(ResAllMarkerMapper.resAllMarkerMapper(r));
+            }
+            return Response.ok().entity(l).build();
         } catch (ResourceException e){
             return Response.status(404).build();
         }
@@ -86,7 +111,8 @@ public class AllocationController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findById(@PathParam("id") UUID id) {
         try {
-            return Response.ok().entity(readAllocationAppPort.findById(id)).build();
+            GetMarkerDTO g = ResAllMarkerMapper.resAllMarkerMapper(readAllocationAppPort.findById(id));
+            return Response.ok().entity(g).build();
         } catch (ResourceException e){
             return Response.status(404).build();
         }
@@ -105,22 +131,22 @@ public class AllocationController {
         }
     }
 
-//    @POST
-//    @Path("/add")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response allocateResource(PostMarkerDTO dto){
-//        Set<ConstraintViolation<PostMarkerDTO>> cos = validator.validate(dto);
-//        if(cos.isEmpty()){
-//            try {
-//                editAllocationAppPort.allocateResource(dto);
-//                return Response.ok().build();
-//            } catch (ResourceException | UserException e){
-//                return Response.status(400).build();
-//            }
-//        }
-//        return Response.status(401).build();
-//
-//    }
+    @POST
+    @Path("/add")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response allocateResource(PostMarkerDTO dto){
+        Set<ConstraintViolation<PostMarkerDTO>> cos = validator.validate(dto);
+        if(cos.isEmpty()){
+            try {
+                editAllocationAppPort.allocateResource(ResAllMarkerMapper.getAllocationDomain(dto));
+                return Response.ok().build();
+            } catch (ResourceException | UserException e){
+                return Response.status(400).build();
+            }
+        }
+        return Response.status(401).build();
+
+    }
 
     @POST
     @Path("/end/{id}")
