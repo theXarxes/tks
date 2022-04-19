@@ -9,6 +9,7 @@ import entity.resources.Resource;
 import exception.ResourceException;
 import mapper.ResourceMapper;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -23,6 +24,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Path("/resource")
+@RequestScoped
 public class ResourceController {
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

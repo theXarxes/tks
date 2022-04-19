@@ -8,6 +8,7 @@ import entity.users.User;
 import exception.UserException;
 import mapper.UserMapper;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.*;
 import javax.ws.rs.*;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
 @Path("/user")
+@RequestScoped
 public class UserController {
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

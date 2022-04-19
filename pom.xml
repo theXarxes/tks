@@ -30,6 +30,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing-payara-micro</artifactId>
+            <version>0.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.microshed</groupId>
+            <artifactId>microshed-testing-testcontainers</artifactId>
+            <version>0.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
@@ -80,18 +92,21 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-parameter-names</artifactId>
+            <version>2.13.2</version>
         </dependency>
 
         <!--	Java 8 Date/time	-->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.2</version>
         </dependency>
 
         <!--	Java 8 Datatypes	-->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>2.13.2</version>
         </dependency>
     </dependencies>
 

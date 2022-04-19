@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="DomainModel" />
+        <module name="WEB" />
+        <module name="RestAdapers" />
+        <module name="ApplicationPorts" />
         <module name="ApplicationServices" />
         <module name="RestAdapters" />
         <module name="RepositoriesAdapters" />
         <module name="AplicationPorts" />
-        <module name="DomainModel" />
-        <module name="WEB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ApplicationCore" target="11" />
-      <module name="ApplicationPorts" target="11" />
       <module name="DomaniModel" target="11" />
     </bytecodeTargetLevel>
   </component>

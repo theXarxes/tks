@@ -10,6 +10,7 @@ import exception.ResourceException;
 import exception.UserException;
 import mapper.ResAllMarkerMapper;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Path("/allocate")
+@RequestScoped
 public class AllocationController {
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

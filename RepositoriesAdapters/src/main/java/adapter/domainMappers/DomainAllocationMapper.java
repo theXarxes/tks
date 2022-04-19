@@ -3,6 +3,9 @@ package adapter.domainMappers;
 import adapter.repositories.data.resources.ResourceAllocationMarkerEnt;
 import entity.resources.ResourceAllocationMarker;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class DomainAllocationMapper {
 
     public static ResourceAllocationMarker getDomainAllocation(ResourceAllocationMarkerEnt markerEnt){

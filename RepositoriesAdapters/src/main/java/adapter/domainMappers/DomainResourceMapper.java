@@ -3,6 +3,9 @@ package adapter.domainMappers;
 import adapter.repositories.data.resources.ResourceEnt;
 import entity.resources.Resource;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class DomainResourceMapper {
 
     public static ResourceEnt getResourceEntMapper(Resource resource){
