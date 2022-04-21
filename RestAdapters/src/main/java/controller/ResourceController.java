@@ -18,10 +18,7 @@ import javax.validation.ValidatorFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Path("/resource")
 @RequestScoped
@@ -41,9 +38,10 @@ public class ResourceController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") String id) {
         try {
-            return Response.ok().entity(readResourcePort.findById(UUID.fromString(id))).build();
+            return Response.ok().entity(ResourceMapper.resourceMapper(readResourcePort.findById(UUID.fromString(id)))).build();
         } catch (ResourceException e){
             return Response.status(404).build();
+
         }
     }
 
@@ -60,7 +58,8 @@ public class ResourceController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUResource(PostResourceDTO resourceDTO){
-        Set<ConstraintViolation<PostResourceDTO>> cos = validator.validate(resourceDTO);
+//        Set<ConstraintViolation<PostResourceDTO>> cos = validator.validate(resourceDTO);
+        Set<ConstraintViolation<PostResourceDTO>> cos = new HashSet<>();
         if(cos.isEmpty()){
             editResourcePort.addResource(ResourceMapper.getResource(resourceDTO));
             return Response.status(201).build();

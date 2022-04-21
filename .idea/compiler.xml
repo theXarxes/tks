@@ -10,6 +10,7 @@
         <module name="DomainModel" />
         <module name="WEB" />
         <module name="RestAdapers" />
+        <module name="SoapApi" />
         <module name="ApplicationPorts" />
         <module name="ApplicationServices" />
         <module name="RestAdapters" />

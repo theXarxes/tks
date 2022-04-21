@@ -22,8 +22,7 @@ public class ResourceRepositoryAdapter implements ReadResourcePort, EditResource
 
     @Override
     public void addResource(Resource r){
-        repository
-                .addResource(DomainResourceMapper.getResourceEntMapper(r));
+        repository.addResource(DomainResourceMapper.getResourceEntMapper(r));
     }
 
     @Override
