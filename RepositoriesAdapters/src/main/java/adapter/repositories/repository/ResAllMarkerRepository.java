@@ -16,7 +16,7 @@ public class ResAllMarkerRepository {
     @Inject
     ResourceRepository repository;
 
-    List<ResourceAllocationMarkerEnt> markers = Collections.synchronizedList(new ArrayList<>());
+    List<ResourceAllocationMarkerEnt> markers = new ArrayList<>();
 
     public void addMarker(ResourceAllocationMarkerEnt r){
         markers.add(r);
@@ -24,6 +24,11 @@ public class ResAllMarkerRepository {
 
     public List<ResourceAllocationMarkerEnt> getMarkers(){
         return markers;
+    }
+
+    public void changeAllocation(UUID id){
+        ResourceAllocationMarkerEnt r = findById(id);
+        r.setEnded(!r.isEnded());
     }
 
     public ResourceAllocationMarkerEnt findById(UUID id){
@@ -68,4 +73,6 @@ public class ResAllMarkerRepository {
         }
         return false;
     }
+
+
 }

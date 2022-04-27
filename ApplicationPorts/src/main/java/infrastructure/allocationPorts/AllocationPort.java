@@ -19,4 +19,6 @@ public interface AllocationPort {
     boolean delete(UUID id) throws ResourceAllocationException;
 
     void addMarker(ResourceAllocationMarker r);
+
+    void changeAllocation(UUID id);
 }

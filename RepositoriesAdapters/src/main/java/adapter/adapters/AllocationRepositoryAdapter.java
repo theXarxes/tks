@@ -8,12 +8,13 @@ import exception.ResourceAllocationException;
 import infrastructure.allocationPorts.AllocationPort;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@RequestScoped
 public class AllocationRepositoryAdapter implements AllocationPort {
 
     @Inject
@@ -22,6 +23,11 @@ public class AllocationRepositoryAdapter implements AllocationPort {
     @Override
     public void addMarker(ResourceAllocationMarker r){
         repository.addMarker(DomainAllocationMapper.getAllocation(r));
+    }
+
+    @Override
+    public void changeAllocation(UUID id) {
+        repository.changeAllocation(id);
     }
 
     @Override

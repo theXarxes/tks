@@ -10,12 +10,13 @@ import infrastructure.resourcePorts.EditResourcePort;
 import infrastructure.resourcePorts.ReadResourcePort;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@RequestScoped
 public class ResourceService implements ReadResourceAppPort, EditResourceAppPort {
 
     @Inject

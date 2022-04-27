@@ -16,12 +16,13 @@ import infrastructure.resourcePorts.ReadResourcePort;
 import infrastructure.userPorts.ReadUsersPort;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@RequestScoped
 public class ResAllMarkerService implements ReadAllocationAppPort, EditAllocationAppPort {
 
     @Inject
@@ -130,7 +131,7 @@ public class ResAllMarkerService implements ReadAllocationAppPort, EditAllocatio
         ResourceAllocationMarker r = allocationPort.findById(id);
         if (r == null) throw new ResourceException("Invalid marker id...");
         editResourcePort.changeAllocation(r.getResource());
-        r.setEnded(true);
+        allocationPort.changeAllocation(id);
     }
 
 }
